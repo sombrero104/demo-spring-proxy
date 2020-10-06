@@ -1,9 +1,6 @@
 package me.sombrero.demospringproxy.dynamic;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +12,7 @@ import java.util.List;
 @Getter @Setter
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Book {
 
     @Id @GeneratedValue
@@ -30,5 +28,104 @@ public class Book {
      */
     @OneToMany
     private List<Note> notes;
+
+
+    /**
+     * 빌드 후 클래스 파일을 열어보면..
+     * 아래와 같이 컴파일이 된 것을 확인할 수 있다.
+     *
+     *
+     * //
+     * // Source code recreated from a .class file by IntelliJ IDEA
+     * // (powered by FernFlower decompiler)
+     * //
+     *
+     * package me.sombrero.demospringproxy.dynamic;
+     *
+     * import java.util.List;
+     * import javax.persistence.Entity;
+     * import javax.persistence.GeneratedValue;
+     * import javax.persistence.Id;
+     * import javax.persistence.OneToMany;
+     *
+     * @Entity
+     * public class Book {
+     *     @Id
+     *     @GeneratedValue
+     *     private Integer id;
+     *     private String title;
+     *     @OneToMany
+     *     private List<Note> notes;
+     *
+     *     public static Book.BookBuilder builder() {
+     *         return new Book.BookBuilder();
+     *     }
+     *
+     *     public Integer getId() {
+     *         return this.id;
+     *     }
+     *
+     *     public String getTitle() {
+     *         return this.title;
+     *     }
+     *
+     *     public List<Note> getNotes() {
+     *         return this.notes;
+     *     }
+     *
+     *     public void setId(final Integer id) {
+     *         this.id = id;
+     *     }
+     *
+     *     public void setTitle(final String title) {
+     *         this.title = title;
+     *     }
+     *
+     *     public void setNotes(final List<Note> notes) {
+     *         this.notes = notes;
+     *     }
+     *
+     *     public Book() {
+     *     }
+     *
+     *     public Book(final Integer id, final String title, final List<Note> notes) {
+     *         this.id = id;
+     *         this.title = title;
+     *         this.notes = notes;
+     *     }
+     *
+     *     public static class BookBuilder {
+     *         private Integer id;
+     *         private String title;
+     *         private List<Note> notes;
+     *
+     *         BookBuilder() {
+     *         }
+     *
+     *         public Book.BookBuilder id(final Integer id) {
+     *             this.id = id;
+     *             return this;
+     *         }
+     *
+     *         public Book.BookBuilder title(final String title) {
+     *             this.title = title;
+     *             return this;
+     *         }
+     *
+     *         public Book.BookBuilder notes(final List<Note> notes) {
+     *             this.notes = notes;
+     *             return this;
+     *         }
+     *
+     *         public Book build() {
+     *             return new Book(this.id, this.title, this.notes);
+     *         }
+     *
+     *         public String toString() {
+     *             return "Book.BookBuilder(id=" + this.id + ", title=" + this.title + ", notes=" + this.notes + ")";
+     *         }
+     *     }
+     * }
+     */
 
 }
