@@ -51,8 +51,9 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
-        <!-- Lombok (IDE에서도 Lombok 플러그인을 설치해줘야 함.) -->
-        <!-- (현재 프로젝트의 주제인 Proxy와는 관련이 없다;) -->
+        <!-- Lombok (IDE에서도 Lombok 플러그인을 설치해줘야 함.)
+            (환경설정에서 Annotation Processors도 활성화 시켜줘야 한다.)
+            (현재 프로젝트의 주제인 Proxy와는 관련이 없다;) -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
