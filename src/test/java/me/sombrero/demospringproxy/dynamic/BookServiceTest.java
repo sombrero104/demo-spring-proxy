@@ -14,12 +14,22 @@ import java.lang.reflect.Proxy;
 
 import static net.bytebuddy.matcher.ElementMatchers.named;
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * 다이나믹 프록시
  * 런타임에(애플리케이션을 실행하는 도중에) 특정 인터페이스들을 구현하는 클래스 또는 인스턴스를 만드는 기술.
  * “an application can use a dynamic proxy class to create an object
  *  that implements multiple arbitrary event listener interfaces”
+ *
+ * 다이나믹 프록시 사용처
+ * - 스프링 데이터 JPA
+ * - 스프링 AOP
+ * - Mockito
+ * - 하이버네이트 lazy initialization
+ * - ...
  */
 public class BookServiceTest {
 
@@ -100,7 +110,7 @@ public class BookServiceTest {
      * (상속을 막는 방법 중 하나이기 때문.. 상속을 하면 하위 클래스에서는 항상 부모의 생성자를 호출하므로..)
      * 때문에 가능하면 인터페이스를 만들어서 프록시를 사용하는 것을 권장..
      */
-    @Test
+    /*@Test
     public void bytebuddy() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Class<? extends DefaultBookService> proxyClass = new ByteBuddy().subclass(DefaultBookService.class)
                 .method(named("rent")).intercept(InvocationHandlerAdapter.of(new InvocationHandler() {
@@ -116,6 +126,23 @@ public class BookServiceTest {
                 .make().load(DefaultBookService.class.getClassLoader()).getLoaded();
         DefaultBookService defaultBookService = proxyClass.getConstructor(null).newInstance();
 
+        Book book = new Book();
+        book.setTitle("spring");
+        defaultBookService.rent(book);
+        defaultBookService.returnBook(book);
+    }*/
+
+    /**
+     * Mock(Mockito라는 테스트 라이브러리가 만들어주는 가짜 객체)은 다이나믹 프록시를 사용한다.
+     * 아래는 Mock을 사용하는 방법.
+     */
+    @Test
+    public void test_mock() {
+        BookRepository bookRepositoryMock = mock(BookRepository.class);
+        Book hibernateBook = new Book();
+        hibernateBook.setTitle("Hibernate");
+        when(bookRepositoryMock.save(any())).thenReturn(hibernateBook);
+        DefaultBookService defaultBookService = new DefaultBookService(bookRepositoryMock);
         Book book = new Book();
         book.setTitle("spring");
         defaultBookService.rent(book);

@@ -1,13 +1,7 @@
 package me.sombrero.demospringproxy.dynamic;
 
-public class BookRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
 
-    public void save(Book book) {
-        System.out.println("save a book!!");
-    }
-
-    public void findAll() {
-        System.out.println("find all books!!");
-    }
+public interface BookRepository extends JpaRepository<Book, Integer> {
 
 }
